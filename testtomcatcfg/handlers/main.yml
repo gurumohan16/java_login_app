@@ -1,1 +1,10 @@
 ---
+- name: restart and enable tomcat and firewalld service
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  with_items:
+    - tomcat
+    - firewalld
+  listen: "Enable and Restart"

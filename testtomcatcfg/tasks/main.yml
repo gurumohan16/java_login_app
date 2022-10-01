@@ -3,3 +3,9 @@
   yum:
     name: ['tomcat','tomcat-webapps','tomcat-admin-webapps']
     state: latest
+
+- name: Copy tomcat user conf
+  copy:
+    src: tomcat-users.xml
+    dest: /usr/share/tomcat/conf/tomcat-users.xml
+  notify: "Enable and Restart"
