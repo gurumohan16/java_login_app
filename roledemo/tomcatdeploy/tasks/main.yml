@@ -8,4 +8,5 @@
   copy:
    src: tomcat-users.xml
    dest: /usr/share/tomcat/conf/tomcat-users.xnl
+   force: yes
   notify: "trigger handler"
