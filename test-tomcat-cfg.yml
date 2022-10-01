@@ -3,4 +3,4 @@
   hosts: node2
   become: true
   roles:
-   - tomcatsetup
+   - testtomcatcfg
