@@ -4,9 +4,14 @@
    name: ['tomcat','tomcat-webapps','tomcat-admin-webapps']
    state: latest
 
+- name: Remove tomcat-users.xml file if exist
+  file:
+   path: /usr/share/tomcat/conf/tomcat-users.xml
+   state: absent
+
 - name: Copy tomcat users file
   copy:
    src: tomcat-users.xml
-   dest: /usr/share/tomcat/conf/tomcat-users.xnl
+   dest: /usr/share/tomcat/conf/tomcat-users.xml
    force: yes
   notify: "trigger handler"
