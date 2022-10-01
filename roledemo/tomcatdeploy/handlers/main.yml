@@ -13,6 +13,7 @@
   firewalld:
     port: 8080/tcp
     zone: public
+    state: enabled
     permanent: yes
     immediate: yes
   listen: "trigger handler"
