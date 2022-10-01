@@ -1,0 +1,6 @@
+---
+- name: To deploy httpd service
+  hosts: node1
+  become: true
+  tasks:
+  - import_tasks: deploypart2.yml

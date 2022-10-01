@@ -1,0 +1,26 @@
+---
+- name: First Playbook execution
+  hosts: 192.168.1.110
+  become: true
+  vars:
+   pkgname: "httpd"
+  tasks:
+  - name: Install httpd web app
+    yum:
+     name: httpd 
+     state: latest
+
+  - name: Install "{{ pkgname }}"
+    yum:
+     name: "{{ pkgname }}"
+     state: latest 
+
+  - name: Restart httpd service
+    service:
+     name: httpd
+     state: restarted
+
+  - name: Restart "{{ pkgname }}"  service
+    service:
+     name: "{{ pkgname }}"
+     state: restarted 

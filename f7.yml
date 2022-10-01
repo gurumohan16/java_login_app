@@ -1,0 +1,11 @@
+---
+- name: To explore template module
+  hosts: all
+  become: true
+  vars:
+   ip_ad: 10.10.10.10
+  tasks:
+   - name: Copy a ip config file with updated value
+     template:
+       src: /tmp/ip.conf
+       dest: /tmp/ip.conf

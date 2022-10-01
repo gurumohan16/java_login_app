@@ -1,0 +1,12 @@
+---
+- name: Usage of when tag
+  hosts: all
+  become: true
+  tasks:
+    - name: install postfix
+      yum:
+       name: postfix
+       state: latest
+      when: ansible_facts.architecture == "32"
+    - debug:
+        var: ansible_facts

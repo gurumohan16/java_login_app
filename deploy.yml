@@ -1,0 +1,15 @@
+---
+- name: To deploy httpd service
+  hosts: app
+  become: true
+  vars:
+   pkg: httpd
+  tasks:
+   - name: Install "{{ pkg }}"
+     yum:
+      name: "{{ pkg }}"
+      state: latest
+   - name: Restart "{{ pkg }}"
+     service:
+      name: "{{ pkg }}"
+      state: restarted

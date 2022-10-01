@@ -1,0 +1,28 @@
+---
+- name: Install & Configure Tomcat
+  hosts: node2
+  become: true
+  tasks:
+   - name: Install Tomat package using yum module
+     yum:
+      name: [ 'tomcat' , 'tomcat-webapps' , 'tomcat-admin-webapps']
+      state: latest
+   - name: Copy tomcat-users.xml file
+     copy:
+      src: /tmp/tomcat-users.xml
+      dest: /etc/tomcat/tomcat-users.xml
+   - name: Enable & Restart Tomcat & Firewalld Service
+     service:
+      name: "{{ item }}"
+      state: restarted
+      enabled: yes 
+     with_items:
+      - tomcat
+      - firewalld
+   - name: Open port 8080
+     firewalld:
+      port: 8080/tcp
+      permanent: yes
+      state: disabled
+      zone: public
+      immediate: yes

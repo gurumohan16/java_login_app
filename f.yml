@@ -1,0 +1,15 @@
+---
+- name: First Playbook execution
+  hosts: 192.168.1.110
+  become: true
+  vars:
+   action: { type: service, name: httpd, state: restarted }
+  tasks:
+  - name: Restart {{ action.type }}
+    service:
+      name: "{{ action.name }}"
+      state: "{{ action.state }}"
+  - debug:
+      msg: "Hello {{ action.type }}"
+  - debug:
+      var: action.name

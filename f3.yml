@@ -1,0 +1,25 @@
+---
+- name: To show handler
+  hosts: all
+  become: true
+  tasks:
+  - name: Install docker
+    yum:
+     name: docker
+     state: latest
+    register: f4 
+    notify : Restart docker
+  - set_fact:
+      st: "{{  ansible_facts.os_family }}"
+  - debug:
+      msg: "Print this sattememnt"
+  - debug:
+      var: f4.results
+  - debug:
+      var: st
+
+  handlers:
+  - name: Restart docker
+    service:
+     name: docker
+     state: restarted
