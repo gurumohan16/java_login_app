@@ -11,7 +11,7 @@
 
 - name: Open port 8080
   firewalld:
-    port: 8080/tcp
+    port: "{{ tomcatport }}"
     state: enabled
     permanent: yes
     zone: public

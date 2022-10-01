@@ -1,2 +1,2 @@
 ---
-# vars file for tomcatsetup
+tomcatport: "8080/tcp"
