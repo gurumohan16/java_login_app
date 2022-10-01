@@ -1,2 +1,6 @@
 ---
-# defaults file for tomcatsetup
+tasks:
+  - name: Install Tomcat
+    yum:
+      name: ['tomcat','tomcat-webapps','tomcat-admin-webapps']
+      state: latest
