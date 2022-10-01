@@ -1,2 +1,19 @@
 ---
-# handlers file for tomcatsetup
+- name: Restart tomcat and firewalld service
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  with_items:
+   - tomcat
+   - firewalld
+  listen: "enable and restart"
+
+- name: Open port 8080
+  firewalld:
+    port: 8080/tcp
+    state: enabled
+    permanent: yes
+    zone: public
+    immediate: yes
+  listen: "enable and restart"

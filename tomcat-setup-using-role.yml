@@ -1,0 +1,5 @@
+---
+- name: Asible playbook role to setup tomcat
+  hosts: all
+  roles:
+   - tomcatsetup
