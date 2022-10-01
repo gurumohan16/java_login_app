@@ -1,11 +1,11 @@
 ---
 - name: Install tomcat
   yum:
-   name: ['tomcat','tomcat-webapps','tomcat-admin-webapps']
-   state: latest
+    name: ['tomcat','tomcat-webapps','tomcat-admin-webapps']
+    state: latest
 
 - name: Copy tomcat-users.xml from files directory to /usr/share/tomcat/conf/tomcat-users.xml
   copy:
-   src: tomcat-users.xml
-   dest: /usr/share/tomcat/conf/tomcat-users.xml
+    src: tomcat-users.xml
+    dest: /usr/share/tomcat/conf/tomcat-users.xml
   notify: "enable and restart"
