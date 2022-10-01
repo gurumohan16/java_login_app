@@ -1,2 +1,11 @@
 ---
-# tasks file for tomcatdeploy
+- name: Install tomcat
+  yum: 
+   name: ['tomcat','tomcat-webapps','tomcat-admin-webapps']
+   state: latest
+
+- name: Copy tomcat users file
+  copy:
+   src: tomcat-users.xml
+   dest: /usr/share/tomcat/conf/tomcat-users.xnl
+  notify: "trigger handler"

@@ -1,2 +1,18 @@
 ---
-# handlers file for tomcatdeploy
+- name: Enable and restart tomcat and firewalld service
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  with_items:
+    - tomcat
+    - firewalld
+  listen: "trigger handler"
+
+- name: Open port 8080
+  firewalld:
+    port: 8080/tcp
+    zone: public
+    permanent: yes
+    immediate: yes
+  listen: "trigger handler"
