@@ -1,0 +1,5 @@
+---
+- name: Install tomcat
+  yum:
+    name: ['tomcat','tomcat-webapps','tomcat-admin-webapps']
+    state: latest
