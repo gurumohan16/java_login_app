@@ -1,0 +1,65 @@
+---
+- name: Install Packages
+  hosts: node3 
+  become: true
+  vars:
+   root_db_password: Password123
+  tasks:
+   - name: Download MySQL Community Repo
+     get_url:
+       url: http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm
+       dest: /tmp
+       
+#   - name: Install MySQL Community Repo
+#     command: /usr/bin/rpm -ivh /tmp/mysql-community-release-el7-7.noarch.rpm
+#      args:
+#        warn: false
+   - name: INstall MySQL Community Repo
+     yum: 
+       name: /tmp/mysql-community-release-el7-7.noarch.rpm
+       state: present
+     
+   - name: Install MySQL Server
+     yum: name=mysql-server state=present disable_gpg_check=yes
+   
+   - name: Install MySQL-python, this is required for the task remove anonymous user
+     yum: name=MySQL-python state=present disable_gpg_check=yes
+   
+   - name: Open port 3306
+     firewalld:
+       port: 3306/tcp
+       state: enabled
+       permanent: yes
+       zone: public
+       immediate: yes
+
+   - name: Start MySQL Server and enable it
+     service: name=mysqld state=started enabled=yes
+   
+   - name: Copy tb.sql file to node
+     copy: src=tb.sql dest=/tmp/tb.sql
+
+   - name: Remove Test database if it exist.
+     mysql_db: name=test state=absent
+
+   - name: Create Database 'jwt'
+     mysql_db: name=jwt state=present
+   
+   - name: Create table
+     mysql_db: name=jwt state=import target=/tmp/tb.sql
+
+   - debug: msg="Hostname is {{ansible_hostname}}"
+
+   - name: Change root password
+     mysql_user: name=root host={{item}} password={{root_db_password}}
+     with_items:
+       - "{{ansible_hostname}}"
+       - 127.0.0.1
+       - ::1
+       - localhost
+
+   - name: SELinux Allow tomcat to connec to mysql
+     seboolean:
+       name: tomcat_can_network_connect_db
+       state: yes
+       persistent: yes

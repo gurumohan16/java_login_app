@@ -1,0 +1,9 @@
+---
+- name: Deploy war package to tomcat
+  hosts: node3
+  become: true
+  tasks:
+   - name: Copy war package to tomcat
+     copy:
+       src: sourcecode/LoginWebApp/target/LoginWebApp.war
+       dest: /usr/share/tomcat/webapps/
